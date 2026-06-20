@@ -25,6 +25,12 @@ jobs:
           cp -r "$INNER_DIR"/. .
           ls -la
 
+      - name: Fix missing app icon references
+        run: |
+          sed -i '/android:icon="@mipmap\/ic_launcher"/d' app/src/main/AndroidManifest.xml
+          sed -i '/android:roundIcon="@mipmap\/ic_launcher_round"/d' app/src/main/AndroidManifest.xml
+          cat app/src/main/AndroidManifest.xml
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
