@@ -29,7 +29,11 @@ jobs:
         run: |
           sed -i '/android:icon="@mipmap\/ic_launcher"/d' app/src/main/AndroidManifest.xml
           sed -i '/android:roundIcon="@mipmap\/ic_launcher_round"/d' app/src/main/AndroidManifest.xml
-          cat app/src/main/AndroidManifest.xml
+
+      - name: Fix invalid android:gap attribute
+        run: |
+          sed -i '/android:gap=/d' app/src/main/res/layout/activity_settings.xml
+          grep -n "gap" app/src/main/res/layout/activity_settings.xml || echo "No more gap attributes found - clean!"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
